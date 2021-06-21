@@ -71,7 +71,29 @@ type Selector<S extends States> = Pick<Transitions<S>,
             .log()
             .gatherResult()
             .result
-    );
+    ); // ✅ Compiles
+    
+    console.log(
+        FancyCalc
+            .create()
+            .complexComputation(9)
+            .log()
+            .complexComputation(2)
+            .log()
+            .result // ❌ Syntax Err! `Property 'result' does not exist on type 'Selector<"computed">'.`
+            .gatherResult()
+    ); 
+    
+    console.log(
+        FancyCalc
+            .create()
+            .complexComputation(9)
+            .log()
+            .log()
+            .gatherResult()
+            .complexComputation(2) // ❌ Syntax Err! `Property 'complexComputation' does not exist on type 'Selector<"gathered">'.`
+            .result 
+    ); 
 }
 
 // Builder functions
